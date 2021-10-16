@@ -2,7 +2,14 @@
   <div class="status-block">
     <div class="items" v-for="(state, key) in statusData" :key="key">
       <span>{{ state.name }}</span>
-      <div class="status-color" :style="state.value ? 'background-color: rgb(0, 255, 98)' : 'background-color: red'"></div>
+      <div
+        class="status-color"
+        :style="
+          state.value
+            ? 'background-color: rgb(0, 255, 98)'
+            : 'background-color: red'
+        "
+      ></div>
     </div>
   </div>
 </template>
@@ -13,7 +20,7 @@ export default {
   data() {
     return {
       statusData: [],
-    }
+    };
   },
   methods: {
     async getData() {
@@ -28,13 +35,18 @@ export default {
   },
   mounted() {
     this.getData();
-  }
-}
+    this.timer = setInterval(this.getData, 1000);
+  },
+  beforeUnmount() {
+    if (this.timer) {
+      window.clearInterval(this.timer);
+    }
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
 .status-block {
   width: 100%;
   height: 100%;

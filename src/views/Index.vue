@@ -6,10 +6,10 @@
     <div class="container">
       <div class="function-block" :class="{pointer: !functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="key">
         <button class="reset-btn rounded-circle text-white" title="取消" @click="reset(key)" v-if="functionExist(key)">&times;</button>
-        <ShowPicture :path="functionSelect[key].picturePath" v-if="functionSelect[key].showPicture"/>
-        <ShowTime v-else-if="functionSelect[key].showTime"/>
-        <Flashing v-else-if="functionSelect[key].flashing"/>
-        <ShowStatus v-else-if="functionSelect[key].showStatus"/>
+        <ShowTime v-if="functionSelect[key].type === 1"/>
+        <Flashing v-else-if="functionSelect[key].type === 2"/>
+        <ShowStatus v-else-if="functionSelect[key].type === 3"/>
+        <ShowPicture :path="functionSelect[key].picturePath" v-else-if="functionSelect[key].type === 4"/>
         <span v-else>+</span>
       </div>
     </div>
@@ -25,13 +25,13 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="function-select mb-3" data-dismiss="modal" @click="functionSelect[key].showTime = true">顯示時間</div>
-              <label class="function-select mb-3 w-100">
+              <div class="function-select mb-3" data-dismiss="modal" @click="functionSelect[key].type = 1">顯示時間</div>
+              <div class="function-select mb-3" data-dismiss="modal" @click="functionSelect[key].type = 2">閃爍功能</div>
+              <div class="function-select mb-3" data-dismiss="modal" @click="functionSelect[key].type = 3">系統狀態</div>
+              <label class="function-select w-100">
                 <span>放入圖片</span>
                 <input type="file" accept=".jpg, .png" class="img-input" @change="previewFiles" :data-key="key">
               </label>
-              <div class="function-select mb-3" data-dismiss="modal" @click="functionSelect[key].flashing = true">閃爍功能</div>
-              <div class="function-select" data-dismiss="modal" @click="functionSelect[key].showStatus = true">系統狀態</div>
             </div>
           </div>
         </div>
@@ -54,46 +54,30 @@ export default {
     return {
       functionSelect: [
       {
-        showTime: false,
+        type: '',
         picturePath: '',
-        showPicture: false,
-        flashing: false,
-        showStatus: false,
       },
       {
-        showTime: false,
+        type: '',
         picturePath: '',
-        showPicture: false,
-        flashing: false,
-        showStatus: false,
       },
       {
-        showTime: false,
+        type: '',
         picturePath: '',
-        showPicture: false,
-        flashing: false,
-        showStatus: false,
       },
       {
-        showTime: false,
+        type: '',
         picturePath: '',
-        showPicture: false,
-        flashing: false,
-        showStatus: false,
       }],
       closeModel: false,
     }
   },
   methods: {
     reset(key) {
-      this.functionSelect[key].showTime = false;
-      this.functionSelect[key].showPicture = false;
-      this.functionSelect[key].picturePath = '';
-      this.functionSelect[key].flashing = false;
-      this.functionSelect[key].showStatus = false;
+      this.functionSelect[key].type = '';
     },
     functionExist(key) {
-      if(Object.values(this.functionSelect[key]).includes(true)) return true;
+      if(this.functionSelect[key].type !== '') return true;
     },
     previewFiles(e) {
       const file = e.target.files[0];
@@ -103,7 +87,7 @@ export default {
       reader.onload = e => select.picturePath = e.target.result;
       reader.readAsDataURL(file);
 
-      select.showPicture = true;
+      select.type = 4;
       this.closeModel = true;
       const modalBackdrop = document.querySelector('.modal-backdrop');
       const body = document.querySelector('body');
