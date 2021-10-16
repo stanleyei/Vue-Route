@@ -1,6 +1,6 @@
 <template>
   <div class="flashing" :class="{red: hasColor}">
-    <input type="color" class="color" value="#ff00ff">
+    <input type="color" class="color" v-model="color" @input="changeColor">
   </div>
 </template>
 
@@ -10,7 +10,13 @@ export default {
   data() {
     return {
       hasColor: true,
-    };
+      color: '#ff0000',
+    }
+  },
+  methods: {
+    changeColor(e) {
+      e.target.parentElement.style.setProperty('--color', this.color);
+    }
   },
   mounted() {
     this.timer = setInterval(() => {
@@ -38,7 +44,14 @@ export default {
     }
   }
 
+  $color: var(--color);
+
   .red {
-    background: radial-gradient(circle at center,red,rgb(133, 55, 55));
+    @if $color == true {
+      background-color: var(--color);
+    } @else {
+      background-color: red;
+    }
   }
+
 </style>
