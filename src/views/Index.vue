@@ -57,13 +57,32 @@ export default {
     functionExist(key) {
       if(this.functionSelect[key].type > 0) return true;
     },
-    dragTest() {
-      console.log(111);
+    getWsData() {
+      let ws = new WebSocket('ws://localhost:8100');
+      ws.onopen = () => {
+        console.log('open connection')
+      }
+
+      ws.onmessage = message => {
+        console.log(message);
+      }
     },
-    drop() {
-      console.log(222);
-    }
+
+    // dragTest() {
+    //   console.log(111);
+    // },
+    // drop() {
+    //   console.log(222);
+    // }
   },
+  mounted() {
+    // this.getWsData();
+  },
+  // beforeUnmount() {
+  //   ws.onclose = () => {
+  //     console.log('close connection')
+  //   }
+  // },
 }
 </script>
 
