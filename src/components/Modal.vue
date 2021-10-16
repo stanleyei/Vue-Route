@@ -29,12 +29,10 @@ export default {
   name: "Modal",
   props: {
     index: Number,
-    close: Boolean,
   },
   data() {
     return {
-      path: '',
-      closeModel: this.close,
+      closeModel: false,
     }
   },
   methods: {

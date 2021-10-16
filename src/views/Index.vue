@@ -11,7 +11,7 @@
         <ShowStatus v-else-if="functionSelect[key].type === 3"/>
         <ShowPicture :path="functionSelect[key].picturePath" v-else-if="functionSelect[key].type === 4"/>
         <span v-else>+</span>
-        <Modal :index="key" :close="closeModel"/>
+        <Modal :index="key"/>
       </div>
     </div>
   </main>
@@ -48,7 +48,6 @@ export default {
         type: 0,
         picturePath: '',
       }],
-      closeModel: false,
     }
   },
   methods: {
@@ -56,7 +55,7 @@ export default {
       this.functionSelect[key].type = 0;
     },
     functionExist(key) {
-      if(this.functionSelect[key].type !== 0) return true;
+      if(this.functionSelect[key].type > 0) return true;
     },
   },
 }
