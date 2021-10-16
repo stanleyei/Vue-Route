@@ -2,8 +2,7 @@
   <div class="status-block">
     <div class="items" v-for="(state, key) in statusData" :key="key">
       <span>{{ state.name }}</span>
-      <div
-        class="status-color"
+      <div class="status-color"
         :style="
           state.value
             ? 'background-color: rgb(0, 255, 98)'

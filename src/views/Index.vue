@@ -3,8 +3,8 @@
     <div class="home mb-5">
       <img alt="Vue logo" src="@/assets/logo.png">
     </div>
-    <div class="container">
-      <div class="function-block" :class="{pointer: !functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="key" draggable="true">
+    <div class="container" @drop="drop">
+      <div class="function-block" :class="{pointer: !functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="key" draggable="true" @dragover.prevent="dragTest">
         <button class="reset-btn rounded-circle text-white" title="取消" @click="reset(key)" v-if="functionExist(key)">&times;</button>
         <ShowTime v-if="functionSelect[key].type === 1"/>
         <Flashing v-else-if="functionSelect[key].type === 2"/>
@@ -57,6 +57,12 @@ export default {
     functionExist(key) {
       if(this.functionSelect[key].type > 0) return true;
     },
+    dragTest() {
+      console.log(111);
+    },
+    drop() {
+      console.log(222);
+    }
   },
 }
 </script>
