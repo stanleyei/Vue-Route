@@ -8,6 +8,7 @@
         <button class="reset-btn rounded-circle text-white" title="取消" @click="reset(key)" v-if="functionExist(key)">&times;</button>
         <ShowPicture :path="functionSelect[key].picturePath" v-if="functionSelect[key].showPicture"/>
         <ShowTime v-else-if="functionSelect[key].showTime"/>
+        <Flashing v-else-if="functionSelect[key].flashing"/>
         <span v-else>+</span>
       </div>
     </div>
@@ -28,7 +29,7 @@
                 <span>放入圖片</span>
                 <input type="file" accept=".jpg, .png" class="img-input" @change="previewFiles" :data-key="key">
               </label>
-              <div class="function-select mb-3" data-dismiss="modal">閃爍功能</div>
+              <div class="function-select mb-3" data-dismiss="modal" @click="functionSelect[key].flashing = true">閃爍功能</div>
               <div class="function-select" data-dismiss="modal">系統狀態</div>
             </div>
           </div>
@@ -40,11 +41,13 @@
 <script>
 import ShowPicture from '@/components/ShowPicture.vue'
 import ShowTime from '@/components/ShowTime.vue'
+import Flashing from '@/components/Flashing.vue'
+
 
 export default {
   name: "Index",
   components: {
-    ShowPicture,ShowTime
+    ShowPicture,ShowTime,Flashing
   },
   data() {
     return {
