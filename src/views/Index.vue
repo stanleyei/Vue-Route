@@ -4,17 +4,18 @@
       <img alt="Vue logo" src="@/assets/logo.png">
     </div>
     <div class="container">
-      <div class="function-block" :class="{pointer: !functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="key">
+      <div class="function-block" :class="{pointer: !functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="key" draggable="true">
         <button class="reset-btn rounded-circle text-white" title="取消" @click="reset(key)" v-if="functionExist(key)">&times;</button>
         <ShowTime v-if="functionSelect[key].type === 1"/>
         <Flashing v-else-if="functionSelect[key].type === 2"/>
         <ShowStatus v-else-if="functionSelect[key].type === 3"/>
         <ShowPicture :path="functionSelect[key].picturePath" v-else-if="functionSelect[key].type === 4"/>
         <span v-else>+</span>
+        <Modal :index="key" :close="closeModel"/>
       </div>
     </div>
   </main>
-  <teleport to="body" v-if="!closeModel">
+  <!-- <teleport to="body" v-if="!closeModel">
     <div class="modal fade" :id="`functionModal-${key}`" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" v-for="(model, key) in functionSelect" :key="key">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -36,7 +37,7 @@
           </div>
         </div>
     </div>
-  </teleport>
+  </teleport> -->
 </template>
 
 <script>
@@ -44,29 +45,30 @@ import ShowPicture from '@/components/ShowPicture.vue'
 import ShowTime from '@/components/ShowTime.vue'
 import Flashing from '@/components/Flashing.vue'
 import ShowStatus from '@/components/ShowStatus.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
   name: "Index",
   components: {
-    ShowPicture,ShowTime,Flashing,ShowStatus
+    ShowPicture,ShowTime,Flashing,ShowStatus,Modal
   },
   data() {
     return {
       functionSelect: [
       {
-        type: '',
+        type: 0,
         picturePath: '',
       },
       {
-        type: '',
+        type: 0,
         picturePath: '',
       },
       {
-        type: '',
+        type: 0,
         picturePath: '',
       },
       {
-        type: '',
+        type: 0,
         picturePath: '',
       }],
       closeModel: false,
@@ -74,10 +76,10 @@ export default {
   },
   methods: {
     reset(key) {
-      this.functionSelect[key].type = '';
+      this.functionSelect[key].type = 0;
     },
     functionExist(key) {
-      if(this.functionSelect[key].type !== '') return true;
+      if(this.functionSelect[key].type !== 0) return true;
     },
     previewFiles(e) {
       const file = e.target.files[0];
