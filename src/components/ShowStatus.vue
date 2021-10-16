@@ -2,8 +2,7 @@
   <div class="status-block">
     <div class="items" v-for="(state, key) in statusData" :key="key">
       <span>{{ state.name }}</span>
-      <div class="status-color stable" v-if="state.value"></div>
-      <div class="status-color unstable" v-else></div>
+      <div class="status-color" :style="state.value ? 'background-color: rgb(0, 255, 98)' : 'background-color: red'"></div>
     </div>
   </div>
 </template>
@@ -14,7 +13,7 @@ export default {
   data() {
     return {
       statusData: [],
-    };
+    }
   },
   methods: {
     async getData() {
@@ -29,9 +28,8 @@ export default {
   },
   mounted() {
     this.getData();
-  },
-  beforeUnmount() {},
-};
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -57,14 +55,6 @@ export default {
       width: 60px;
       height: 30px;
       border: 2px solid black;
-    }
-
-    .stable {
-      background-color: rgb(0, 255, 98);
-    }
-
-    .unstable {
-      background-color: red;
     }
   }
 }

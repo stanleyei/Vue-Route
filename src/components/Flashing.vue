@@ -1,5 +1,5 @@
 <template>
-  <div class="flashing" :style="hasColor ? `background-color: ${color}` : ''" ref="flashBlock">
+  <div class="flashing" :style="hasColor ? `background-color: ${color}` : ''">
     <input type="color" class="color" v-model="color">
   </div>
 </template>
@@ -31,6 +31,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
   .flashing {
     width: 100%;
     height: 100%;
@@ -40,10 +41,6 @@ export default {
       bottom: 0;
       right: 0;
     }
-  }
-
-  .red {
-    background-color: red;
   }
 
 </style>
