@@ -13,7 +13,7 @@ export default {
   methods: {
     computedTime() {
       const now = new Date();
-      this.time = now.toLocaleTimeString();
+      this.time = now.toLocaleTimeString('en-GB');
     },
   },
   mounted() {
