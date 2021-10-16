@@ -9,6 +9,7 @@
         <ShowPicture :path="functionSelect[key].picturePath" v-if="functionSelect[key].showPicture"/>
         <ShowTime v-else-if="functionSelect[key].showTime"/>
         <Flashing v-else-if="functionSelect[key].flashing"/>
+        <ShowStatus v-else-if="functionSelect[key].showStatus"/>
         <span v-else>+</span>
       </div>
     </div>
@@ -30,7 +31,7 @@
                 <input type="file" accept=".jpg, .png" class="img-input" @change="previewFiles" :data-key="key">
               </label>
               <div class="function-select mb-3" data-dismiss="modal" @click="functionSelect[key].flashing = true">閃爍功能</div>
-              <div class="function-select" data-dismiss="modal">系統狀態</div>
+              <div class="function-select" data-dismiss="modal" @click="functionSelect[key].showStatus = true">系統狀態</div>
             </div>
           </div>
         </div>
@@ -42,12 +43,12 @@
 import ShowPicture from '@/components/ShowPicture.vue'
 import ShowTime from '@/components/ShowTime.vue'
 import Flashing from '@/components/Flashing.vue'
-
+import ShowStatus from '@/components/ShowStatus.vue'
 
 export default {
   name: "Index",
   components: {
-    ShowPicture,ShowTime,Flashing
+    ShowPicture,ShowTime,Flashing,ShowStatus
   },
   data() {
     return {

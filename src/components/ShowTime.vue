@@ -18,11 +18,7 @@ export default {
   },
   mounted() {
     this.computedTime();
-    const vm = this;
-    this.timer = setInterval(() => {
-      const now = new Date();
-      vm.time = now.toLocaleTimeString();
-    }, 1000);
+    this.timer = setInterval(this.computedTime, 1000);
   },
   beforeUnmount() {
     if (this.timer) {

@@ -1,6 +1,6 @@
 <template>
-  <div class="flashing" :class="{red: hasColor}">
-    <input type="color" class="color" v-model="color" @input="changeColor">
+  <div class="flashing" :style="hasColor ? `background-color: ${color}` : ''" ref="flashBlock">
+    <input type="color" class="color" v-model="color">
   </div>
 </template>
 
@@ -14,9 +14,7 @@ export default {
     }
   },
   methods: {
-    changeColor(e) {
-      e.target.parentElement.style.setProperty('--color', this.color);
-    }
+
   },
   mounted() {
     this.timer = setInterval(() => {
@@ -44,14 +42,8 @@ export default {
     }
   }
 
-  $color: var(--color);
-
   .red {
-    @if $color == true {
-      background-color: var(--color);
-    } @else {
-      background-color: red;
-    }
+    background-color: red;
   }
 
 </style>
