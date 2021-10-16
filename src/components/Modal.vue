@@ -40,11 +40,7 @@ export default {
       this.$parent.functionSelect[this.index].type = type;
     },
     previewFiles(e) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      const vm = this;
-      reader.onload = e => vm.$parent.functionSelect[vm.index].picturePath = e.target.result;
-      reader.readAsDataURL(file);
+      this.$parent.functionSelect[this.index].picturePath = URL.createObjectURL(e.target.files[0]);
 
       this.sendToParent(4);
       this.closeModel = true;
