@@ -32,7 +32,7 @@ export default {
       }
     },
   },
-  mounted() {
+  created() {
     this.getData();
     this.timer = setInterval(this.getData, 1000);
   },

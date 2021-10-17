@@ -27,9 +27,7 @@
 <script>
 export default {
   name: "Modal",
-  props: {
-    index: Number,
-  },
+  props: ['index'],
   data() {
     return {
       closeModel: false,
