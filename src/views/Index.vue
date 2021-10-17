@@ -6,11 +6,8 @@
     <div class="container">
       <div class="function-block" :class="{pointer: !functionExist(key), grab: functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="select.id" draggable="true" @dragstart="startDrag($event, key, select.type)" @dragend="endDrag" @drop="onDrop($event, key, select.type)" @dragover.prevent>
         <button class="reset-btn rounded-circle text-white" title="取消" @click="reset(key)" v-if="functionExist(key)">&times;</button>
-        <ShowTime v-if="functionSelect[key].type === 1"/>
-        <Flashing v-else-if="functionSelect[key].type === 2"/>
-        <ShowStatus v-else-if="functionSelect[key].type === 3"/>
-        <ShowPicture :path="functionSelect[key].picturePath" v-else-if="functionSelect[key].type === 4"/>
-        <span v-else>+</span>
+        <component :is="functionSelect[key].name" :path="functionSelect[key].picturePath"/>
+        <span v-if="functionSelect[key].type === 0">+</span>
         <Modal :index="key"/>
       </div>
     </div>
@@ -36,22 +33,40 @@ export default {
         id: 0,
         type: 0,
         picturePath: '',
+        name: ''
       },
       {
         id: 1,
         type: 0,
         picturePath: '',
+        name: '',
       },
       {
         id: 2,
         type: 0,
         picturePath: '',
+        name: '',
       },
       {
         id: 3,
         type: 0,
         picturePath: '',
+        name: '',
       }],
+    }
+  },
+  watch: {
+    functionSelect: {
+      deep: true,
+      handler: function () {
+        this.functionSelect.forEach(select => {
+          if (select.type === 0) select.name = '';
+          if (select.type === 1) select.name = 'ShowTime';
+          if (select.type === 2) select.name = 'Flashing';
+          if (select.type === 3) select.name = 'ShowStatus';
+          if (select.type === 4) select.name = 'ShowPicture';
+        });
+      }
     }
   },
   methods: {
