@@ -7,18 +7,16 @@ export default {
   name: "ShowTime",
   data() {
     return {
-      time: new Date(),
+      time: new Date().toLocaleTimeString('en-GB'),
     };
   },
   methods: {
-    computedTime() {
-      const now = new Date();
-      this.time = now.toLocaleTimeString('en-GB');
+    resetTime() {
+      this.time = new Date().toLocaleTimeString('en-GB');
     },
   },
-  mounted() {
-    this.computedTime();
-    this.timer = setInterval(this.computedTime, 1000);
+  created() {
+    this.timer = setInterval(this.resetTime, 1000);
   },
   beforeUnmount() {
     if (this.timer) {
