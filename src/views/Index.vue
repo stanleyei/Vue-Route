@@ -3,8 +3,8 @@
     <div class="home mb-5">
       <img alt="Vue logo" src="@/assets/logo.png">
     </div>
-    <div class="container" @drop="drop">
-      <div class="function-block" :class="{pointer: !functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="key" draggable="true" @dragover.prevent="dragTest">
+    <div class="container">
+      <div class="function-block" :class="{pointer: !functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="select.id" draggable="true" @dragstart="startDrag($event, select.id, select.type)" @dragend="endDrag" @drop="onDrop($event, key)" @dragover.prevent>
         <button class="reset-btn rounded-circle text-white" title="取消" @click="reset(key)" v-if="functionExist(key)">&times;</button>
         <ShowTime v-if="functionSelect[key].type === 1"/>
         <Flashing v-else-if="functionSelect[key].type === 2"/>
@@ -33,19 +33,27 @@ export default {
     return {
       functionSelect: [
       {
+        id: 0,
         type: 0,
+        color: '#ff0000',
         picturePath: '',
       },
       {
+        id: 1,
         type: 0,
+        color: '#ff0000',
         picturePath: '',
       },
       {
+        id: 2,
         type: 0,
+        color: '#ff0000',
         picturePath: '',
       },
       {
+        id: 3,
         type: 0,
+        color: '#ff0000',
         picturePath: '',
       }],
     }
@@ -67,13 +75,21 @@ export default {
         console.log(message);
       }
     },
-
-    // dragTest() {
-    //   console.log(111);
-    // },
-    // drop() {
-    //   console.log(222);
-    // }
+    startDrag(e, id, type) {
+      e.dataTransfer.setData('type', type);
+      e.dataTransfer.setData('itemID', id);
+    },
+    onDrop(e, endDragID) {
+      const type = e.dataTransfer.getData('type');
+      const startDragID = e.dataTransfer.getData('itemID');
+      const startDragItem = this.functionSelect.find((select) => select.id === Number(startDragID));
+      const endDragItem = this.functionSelect.find((select) => select.id === endDragID);
+      endDragItem.type = Number(type);
+      startDragItem.type = 0;
+    },
+    endDrag (e) {
+      e.dataTransfer.clearData();
+    }
   },
   mounted() {
     // this.getWsData();
