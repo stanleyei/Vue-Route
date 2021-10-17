@@ -35,25 +35,21 @@ export default {
       {
         id: 0,
         type: 0,
-        color: '#ff0000',
         picturePath: '',
       },
       {
         id: 1,
         type: 0,
-        color: '#ff0000',
         picturePath: '',
       },
       {
         id: 2,
         type: 0,
-        color: '#ff0000',
         picturePath: '',
       },
       {
         id: 3,
         type: 0,
-        color: '#ff0000',
         picturePath: '',
       }],
     }
