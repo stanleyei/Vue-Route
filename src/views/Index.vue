@@ -4,7 +4,7 @@
       <img alt="Vue logo" src="@/assets/logo.png">
     </div>
     <div class="container">
-      <div class="function-block" :class="{pointer: !functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="select.id" draggable="true" @dragstart="startDrag($event, key, select.type)" @dragend="endDrag" @drop="onDrop($event, key, select.type)" @dragover.prevent>
+      <div class="function-block" :class="{pointer: !functionExist(key), grab: functionExist(key)}" data-toggle="modal" :data-target="functionExist(key) ? '#' : `#functionModal-${key}`" v-for="(select, key) in functionSelect" :key="select.id" draggable="true" @dragstart="startDrag($event, key, select.type)" @dragend="endDrag" @drop="onDrop($event, key, select.type)" @dragover.prevent>
         <button class="reset-btn rounded-circle text-white" title="取消" @click="reset(key)" v-if="functionExist(key)">&times;</button>
         <ShowTime v-if="functionSelect[key].type === 1"/>
         <Flashing v-else-if="functionSelect[key].type === 2"/>
